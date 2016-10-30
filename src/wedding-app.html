@@ -19,8 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="shrine-list.html">
-<link rel="import" href="shrine-detail.html">
+<link rel="import" href="home-section.html">
+<link rel="import" href="getting-there-section.html">
+<link rel="import" href="rsvp-section.html">
 
 <dom-module id="wedding-app">
 
@@ -56,10 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
-      #mainToolbar {
-        height: 110px;
-      }
-
       paper-icon-button {
         color: #7c7c7c;
         --paper-icon-button-ink-color: #31f0ef;
@@ -77,35 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-center-center);
       }
 
-      .logo {
-        background-image: url(//app-layout-assets.appspot.com/assets/shrine/shrine_logo_withicon.svg);
-        width: 120px;
-        height: 40px;
-        background-size: 100% 100%;
-      }
-
       .leftItem [icon] {
-        display: none;
-      }
-
-
-      shrine-detail {
-        height: calc(100vh - 65px);
-      }
-
-      :host([page=detail]) #mainToolbar {
-        height: 64px;
-      }
-
-      :host([page=detail]) paper-tabs {
-        display: none;
-      }
-
-      :host([page=detail]) .leftItem [icon=arrow-back] {
-        display: block;
-      }
-
-      :host([page=detail]) .leftItem [icon=menu] {
         display: none;
       }
 
@@ -133,24 +102,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
-      .list {
-        margin-left: 20px;
-        margin-right: 20px;
-      }
-
-      .list a {
-        display: block;
-        line-height: 40px;
-        text-decoration: none;
-        text-transform: uppercase;
-        color: #7c7c7c;
-      }
-
-      .list a.active {
-        color: black;
-        font-weight: bold;
-      }
-
       .profileBar {
         margin-bottom: 40px;
       }
@@ -167,29 +118,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #0a3142;
       }
 
-      [icon=settings] {
-        width: 35px;
-        height: 35px;
-        color: #0a3142;
-      }
-
       /**
        * Desktop small, tablet
        */
       @media (max-width: 1200px) {
-        .logo {
-          background-image: url(//app-layout-assets.appspot.com/assets/shrine/shrine_logo.svg);
-          width: 89px;
-          height: 17px;
-        }
-
-        #mainToolbar {
-          height: 64px;
-        }
-
-        shrine-detail {
-          height: auto;
-        }
+        /* TODO */
       }
 
       /**
@@ -212,12 +145,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         route="{{route}}"
         pattern=":section"
         data="{{sectionData}}"
-        tail="{{subRoute}}"></app-route>
-    <app-route
-        route="{{subRoute}}"
-        pattern="/:id"
-        data="{{idData}}"
-        active="{{onDetailPage}}"></app-route>
+        tail="{{subRoute}}"
+        ></app-route>
 
     <iron-media-query query="max-width: 400px" query-matches="{{smallScreen}}"></iron-media-query>
 
@@ -246,8 +175,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a href="#[[sectionData.section]]"><paper-icon-button icon="arrow-back"></paper-icon-button></a>
           </div>
 
-          <template is="dom-if" if="[[_shouldShowTabs(onDetailPage, smallScreen)]]">
-            <paper-tabs fit-container selected="[[selectedTab]]" scrollable sticky$="[[_shouldShowTabs(onDetailPage, smallScreen)]]">
+          <template is="dom-if" if="[[_shouldShowTabs(smallScreen)]]">
+            <paper-tabs fit-container selected="[[selectedTab]]" scrollable sticky$="[[_shouldShowTabs(smallScreen)]]">
               <template is="dom-repeat" items="[[sections]]" as="section">
                 <paper-tab>
                   <a href="#[[section]]">[[section]]</a>
@@ -257,25 +186,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
         </app-header>
 
-        <iron-pages selected="[[page]]" attr-for-selected="name">
-          <!-- detail of item -->
-          <template is="dom-if" if="[[_equal(page, 'detail')]]">
-            <shrine-detail
-                name="detail"
-                section="[[sectionData.section]]"
-                related-items="[[items]]"
-                item="[[_getDetailItem(items, idData.id)]]">
-            </shrine-detail>
-          </template>
-          <!-- list of items -->
-          <template is="dom-if" if="[[_equal(page, 'list')]]">
-            <shrine-list
-                name="list"
-                section="[[sectionData.section]]"
-                items="[[_getItemsCopy(items, sectionData.section)]]"
-                featured-item="[[_getFeaturedItem(featuredItems, sectionData.section)]]">
-            </shrine-list>
-          </template>
+        <!-- <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="view404"
+            role="main">
+        </iron-pages> -->
+        <div id="[[sectionData.section]]"></div>
+        <iron-pages
+            selected="[[sectionData.section]]"
+            attr-for-selected="name">
+          <home-section name="HOME"></home-section>
+          <getting-there-section name="GETTING THERE"></getting-there-section>
+          <rsvp-section name="RSVP"></rsvp-section>
+          <!-- <my-view404 name="view404"></my-view404> -->
         </iron-pages>
 
       </app-header-layout>
@@ -310,17 +234,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         computed: '_computeSelectedTab(sections, sectionData.section)'
       },
 
-      items: {
-        type: Array
-      },
-
-      featuredItems: {
-        type: Array
-      },
-
       page: {
         type: String,
-        computed: '_computePage(onDetailPage)',
         reflectToAttribute: true
       },
 
@@ -330,13 +245,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       sectionData: Object,
 
-      idData: Object,
-
-      onDetailPage: Boolean
+      idData: Object
     },
 
     observers: [
-      '_hashDidChange(route.path, items, featuredItems)'
+      '_hashDidChange(route.path)'
     ],
 
     ready: function() {
@@ -349,24 +262,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _computeSelectedTab: function(sections, section) {
       return sections.indexOf(section);
-    },
-
-    _getItemsCopy: function(items) {
-      return items.slice();
-    },
-
-    _getFeaturedItem: function(featuredItems, section) {
-      return featuredItems.filter(function(item) {
-        return item.category.toLowerCase() === section;
-      }).pop();
-    },
-
-    _getDetailItem: function(items, id) {
-      return items[id];
-    },
-
-    _computePage: function(onDetailPage) {
-      return onDetailPage ? 'detail' : 'list';
     },
 
     _hashDidChange: function() {
@@ -384,8 +279,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return index === selectedTab ? 'active' : '';
     },
 
-    _shouldShowTabs: function(onDetailPage, smallScreen) {
-      return !onDetailPage && !smallScreen;
+    _shouldShowTabs: function(smallScreen) {
+      return !smallScreen;
     }
 
   });
