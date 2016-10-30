@@ -15,12 +15,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animation.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="home-section.html">
+<link rel="import" href="our-story-section.html">
+<link rel="import" href="details-section.html">
 <link rel="import" href="getting-there-section.html">
+<link rel="import" href="gifts-section.html">
 <link rel="import" href="rsvp-section.html">
 
 <dom-module id="wedding-app">
@@ -52,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
-      iron-pages {
+      iron-pages, neon-animated-pages {
         width: 100%;
         height: 100%;
       }
@@ -186,21 +190,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
         </app-header>
 
-        <!-- <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
-        </iron-pages> -->
         <div id="[[sectionData.section]]"></div>
-        <iron-pages
-            selected="[[sectionData.section]]"
-            attr-for-selected="name">
-          <home-section name="HOME"></home-section>
-          <getting-there-section name="GETTING THERE"></getting-there-section>
-          <rsvp-section name="RSVP"></rsvp-section>
-          <!-- <my-view404 name="view404"></my-view404> -->
-        </iron-pages>
+        <neon-animated-pages selected="[[sectionData.section]]"
+                              attr-for-selected="name"
+                              entry-animation='slide-from-right-animation'
+                              exit-animation='slide-left-animation'>
+          <neon-animatable name='HOME'><home-section></home-section></neon-animatable>
+          <neon-animatable name='OUR STORY'><our-story-section></our-story-section></neon-animatable>
+          <neon-animatable name='DETAILS'><details-section></details-section></neon-animatable>
+          <neon-animatable name='GETTING THERE'><getting-there-section></getting-there-section></neon-animatable>
+          <neon-animatable name='GIFTS'><gifts-section></gifts-section></neon-animatable>
+          <neon-animatable name='RSVP'><rsvp-section></rsvp-section></neon-animatable>
+        </neon-animated-pages>
 
       </app-header-layout>
     </app-drawer-layout>
@@ -254,8 +255,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     ready: function() {
       this.async(function() {
+
         if (!this.route.path) {
-          this.set('route.path', 'feature');
+          this.set('route.path', 'HOME');
         }
       });
     },
@@ -269,10 +271,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.$.header._scrollTop = 0;
       this.$.header.resetLayout();
       this.$.drawer.close();
-    },
-
-    _equal: function(a, b) {
-      return a === b;
     },
 
     _getSectionClass: function(index, selectedTab) {
