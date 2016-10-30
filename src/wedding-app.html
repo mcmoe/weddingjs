@@ -193,8 +193,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div id="[[sectionData.section]]"></div>
         <neon-animated-pages selected="[[sectionData.section]]"
                               attr-for-selected="name"
-                              entry-animation='slide-from-right-animation'
-                              exit-animation='slide-left-animation'>
+                              entry-animation=[[_getEntryAnimation(sectionData.section)]]
+                              exit-animation=[[_getExitAnimation(sectionData.section)]]>
           <neon-animatable name='HOME'><home-section></home-section></neon-animatable>
           <neon-animatable name='OUR STORY'><our-story-section></our-story-section></neon-animatable>
           <neon-animatable name='DETAILS'><details-section></details-section></neon-animatable>
@@ -279,6 +279,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _shouldShowTabs: function(smallScreen) {
       return !smallScreen;
+    },
+
+    _getEntryAnimation: function() {
+      return 'fade-in-animation';
+    },
+
+    _getExitAnimation: function() {
+      return 'fade-out-animation';
     }
 
   });
