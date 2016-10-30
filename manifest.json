@@ -1,0 +1,9 @@
+{
+  "name": "wedding",
+  "short_name": "Wedding by Morgan Kobeissi",
+  "description": "Wedding application with gallery, story, location, gifts and RSVP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#fff"
+}
