@@ -17,7 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animation.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="home-section.html">
@@ -56,9 +55,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
 
-      iron-pages, neon-animated-pages {
+      neon-animated-pages {
         width: 100%;
         height: 100%;
+        position: absolute;
       }
 
       paper-icon-button {
@@ -104,6 +104,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: 500;
         padding: 0 20px;
         height: 100%;
+      }
+
+      .list {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      .list a {
+        display: block;
+        line-height: 40px;
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #7c7c7c;
+      }
+
+      .list a.active {
+        color: black;
+        font-weight: bold;
       }
 
       .profileBar {
@@ -165,7 +183,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </app-toolbar>
           <div class="list">
             <template is="dom-repeat" items="[[sections]]" as="section" initial-count="1">
-              <a href="#[[section]]" class$="[[_getSectionClass(index, selectedTab)]]">[[section]]</a>
+              <a href="#[[_toLowerCase(section)]]" class$="[[_getSectionClass(index, selectedTab)]]">[[section]]</a>
             </template>
           </div>
         </template>
@@ -176,14 +194,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header id="header" effects="waterfall" fixed="[[smallScreen]]" condenses="[[!smallScreen]]" reveals="[[!smallScreen]]">
           <div class="navItem leftItem">
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <a href="#[[sectionData.section]]"><paper-icon-button icon="arrow-back"></paper-icon-button></a>
+            <!-- <a href="#[[sectionData.section]]"><paper-icon-button icon="arrow-back"></paper-icon-button></a> -->
           </div>
 
           <template is="dom-if" if="[[_shouldShowTabs(smallScreen)]]">
             <paper-tabs fit-container selected="[[selectedTab]]" scrollable sticky$="[[_shouldShowTabs(smallScreen)]]">
               <template is="dom-repeat" items="[[sections]]" as="section">
                 <paper-tab>
-                  <a href="#[[section]]">[[section]]</a>
+                  <a href="#[[_toLowerCase(section)]]">[[section]]</a>
                 </paper-tab>
               </template>
             </paper-tabs>
@@ -195,12 +213,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                               attr-for-selected="name"
                               entry-animation=[[_getEntryAnimation(sectionData.section)]]
                               exit-animation=[[_getExitAnimation(sectionData.section)]]>
-          <neon-animatable name='HOME'><home-section></home-section></neon-animatable>
-          <neon-animatable name='OUR STORY'><our-story-section></our-story-section></neon-animatable>
-          <neon-animatable name='DETAILS'><details-section></details-section></neon-animatable>
-          <neon-animatable name='GETTING THERE'><getting-there-section></getting-there-section></neon-animatable>
-          <neon-animatable name='GIFTS'><gifts-section></gifts-section></neon-animatable>
-          <neon-animatable name='RSVP'><rsvp-section></rsvp-section></neon-animatable>
+          <neon-animatable name='home'><home-section></home-section></neon-animatable>
+          <neon-animatable name='our story'><our-story-section></our-story-section></neon-animatable>
+          <neon-animatable name='details'><details-section></details-section></neon-animatable>
+          <neon-animatable name='getting there'><getting-there-section></getting-there-section></neon-animatable>
+          <neon-animatable name='gifts'><gifts-section></gifts-section></neon-animatable>
+          <neon-animatable name='rsvp'><rsvp-section></rsvp-section></neon-animatable>
         </neon-animated-pages>
 
       </app-header-layout>
@@ -244,9 +262,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       subRoute: Object,
 
-      sectionData: Object,
-
-      idData: Object
+      sectionData: Object
     },
 
     observers: [
@@ -257,9 +273,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.async(function() {
 
         if (!this.route.path) {
-          this.set('route.path', 'HOME');
+          this.set('route.path', 'home');
         }
       });
+    },
+
+    _toLowerCase: function(section) {
+      return section.toLowerCase();
     },
 
     _computeSelectedTab: function(sections, section) {
