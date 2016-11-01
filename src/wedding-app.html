@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="getting-there-section.html">
 <link rel="import" href="gifts-section.html">
 <link rel="import" href="rsvp-section.html">
+<link rel="import" href="footer-bar.html">
 
 <dom-module id="wedding-app">
 
@@ -56,9 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       neon-animated-pages {
-        width: 100%;
-        height: 100%;
-        position: absolute;
+        @apply(--layout-flex);
       }
 
       paper-icon-button {
@@ -196,7 +195,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header id="header" effects="waterfall" fixed="[[smallScreen]]" condenses="[[!smallScreen]]" reveals="[[!smallScreen]]">
           <div class="navItem leftItem">
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <!-- <a href="#[[sectionData.section]]"><paper-icon-button icon="arrow-back"></paper-icon-button></a> -->
           </div>
 
           <template is="dom-if" if="[[_shouldShowTabs(smallScreen)]]">
@@ -223,6 +221,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <neon-animatable name='rsvp'><rsvp-section></rsvp-section></neon-animatable>
         </neon-animated-pages>
 
+        <footer-bar></footer-bar>
       </app-header-layout>
     </app-drawer-layout>
 
