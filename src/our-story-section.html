@@ -8,19 +8,134 @@
 
       :host {
         display: block;
+        @apply(--layout-fit);
         background-color: #a1d6d6;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-        height: 100%;
-        width: 100%;
-        /*background: url(../images/main-page-background-laptop-size.jpg) no-repeat center;
-        background-size: cover;*/
       }
+
+      .message {
+        @apply(--layout-vertical);
+      }
+
+      .our {
+        font-weight: bold;
+        font-size: 170px;
+        color: rgba(120,161,161,1);
+        @apply(--layout-self-center);
+      }
+
+      .story {
+        font-size: 80px;
+        font-family: lobster,cursive;
+        color: white;
+        @apply(--layout-self-center);
+        bottom: 70px;
+        position: relative;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .subtitle {
+        @apply(--layout-horizontal);
+        @apply(--layout-self-center);
+      }
+
+      .border {
+        border-top: 3px dotted rgba(255, 255, 255, 0.8);
+      }
+
+      .left-border {
+        width: 150px;
+      }
+
+      .right-border {
+        width: 75px;
+      }
+
+      .their-story {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        font-family: lobster, cursive;
+        color: white;
+      }
+
+      .his-story {
+        @apply(--layout-flex);
+        text-align: center;
+        @apply(--layout-vertical);
+      }
+
+      .story-details {
+        font-size: 14px;
+        font-family: spinnaker, sans-serif;
+      }
+
+      .their-images {
+        @apply(--layout-flex);
+        text-align: center;
+        color: #78A1A1;
+      }
+
+      .crop {
+        /*width: 50%;
+        height: 50%;
+        overflow: hidden;
+        @apply(--layout-flex);
+        @apply(--layout-horizontal);*/
+      }
+
+      .crop img {
+          /*@apply(--layout-flex);
+          @apply(--layout-center-center);*/
+          width: 50%;
+          height: 50%;
+          /*margin: -75px 0 0 -100px;*/
+      }
+
+      .her-story {
+        @apply(--layout-flex);
+        text-align: center;
+      }
+
+      .icon-holder {
+        height: 35px;
+        position: relative;
+      }
+
+      .icon {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        fill: #78A1A1;
+        fill-opacity: 1;
+        stroke: rgba(120, 161, 161, 1);
+        stroke-width: 0px;
+      }
+
       /**
        * Desktop small, tablet
        */
       @media (max-width: 1200px) {
-        /* TODO */
+        .our {
+          font-size: 100px;
+        }
+        .story {
+          font-size: 50px;
+          bottom: 45px;
+        }
+
+        .left-border {
+          width: 80px;
+        }
+
+        .right-border {
+          width: 35px;
+        }
       }
 
       /**
@@ -34,6 +149,48 @@
 
     <div>
        <!--TODO -->
+       <div class="message">
+         <div class="our">OUR</div>
+         <div class="subtitle">
+           <div class="border left-border"></div>
+           <div class="story">Story</div>
+           <div class="border right-border"></div>
+         </div>
+       </div>
+
+      <div class="their-story">
+
+        <div class="his-story">
+          <div class="icon-holder">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="-78.5 147 157 102.89999389648438" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px;">
+                <g>
+                    <path d="M78.5 199.9c0-19.5-22.3-35.5-50.2-36.3C17.4 153.5.3 147-19 147c-32.8 0-59.5 18.9-59.5 42.1 0 14 9.8 27 25.8 34.7-3.1 6.1-7.2 11.6-9.5 13.9-1.4 1.4-1.8 3.5-1.1 5.3.8 1.8 2.5 3 4.5 3 16.2 0 27.6-7.8 34.6-15.1 1.8.1 3.5.2 5.1.2 5.3 0 10.4-.5 15.3-1.4 8.7 4.2 19.1 6.4 29.8 6.4 1.7 0 3.6-.1 5.7-.2 8.6 9.3 19 14 31 14 .8 0 1.5-.5 1.8-1.2.3-.7.1-1.6-.4-2.1-2.6-2.6-7.3-9-10.4-15.9 15.4-6.5 24.8-18.2 24.8-30.8zm-104.1 21.2c-1.6-.1-3 .5-4.1 1.6-5.3 5.9-11.2 9.9-17.9 11.9 2.3-3.6 4.4-7.6 6-11.5.5-1.2.5-2.6-.1-3.8-.5-1.2-1.5-2.1-2.7-2.6-15-5.9-24.3-16.5-24.3-27.7 0-17.8 22.3-32.3 49.7-32.3 27.4 0 49.7 14.5 49.7 32.3 0 17.8-22.3 32.3-49.7 32.3-2 .1-4.1 0-6.6-.2zm76.1 6.8c-.5.2-.9.6-1.1 1-.2.5-.2 1 0 1.5 2.2 5.6 5.8 11.3 8.9 15.4-9.2-1.1-17.4-5.5-24.2-13.2-.4-.5-1-.7-1.6-.6-2.4.2-4.4.3-6.3.3-8.2 0-16.2-1.4-23.3-4 22.1-6.2 37.7-21.4 37.7-39.2 0-7.8-3-15.1-8.2-21.3 23.8 2 42.3 15.7 42.3 32.1-.1 11.4-9.3 22.1-24.2 28z"></path>
+                </g>
+            </svg>
+          </div>
+          <h1>His Side</h1>
+          <div class="story-details">This is where you got to say something :)</div>
+        </div>
+        <div class="their-images">
+          <h2>images</h2>
+          <div class="crop">
+            <!-- <img src="../images/carousel-001.jpg"> -->
+          </div>
+          <!-- TODO - image carousel  -->
+        </div>
+        <div class="her-story">
+          <div class="icon-holder">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="-83.5 147.79998779296875 167 103.20001220703125" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px;">
+                <g>
+                    <path d="M83.5 192.9c0-23.7-27.1-42.9-60.4-42.9-8.3 0-16.3 1.2-23.5 3.4 0 0-.1 0-.1-.1-13.5-5.5-29.2-5.3-29.9-5.3-29.3 0-53.1 16.6-53.1 37 0 12.8 9.5 24.7 25.1 31.4-3.1 7-7.9 13.6-10.5 16.2-.6.6-.7 1.4-.4 2.2.3.7 1 1.2 1.8 1.2 12.1 0 22.7-4.8 31.4-14.3 2.2.2 4 .3 5.8.3 2.9 0 5.8-.2 8.7-.5 11.1 8.7 27.1 14.2 44.8 14.2 1.6 0 3.3-.1 5.1-.2C35.4 243 46.9 251 63.4 251c2 0 3.8-1.2 4.6-3.1.8-1.9.3-4-1.1-5.4-2.3-2.3-6.5-7.9-9.6-14.2 16.3-7.9 26.2-21.1 26.2-35.4zm-113.9 25.2c-1.9 0-3.9-.1-6.4-.3-.6-.1-1.2.2-1.7.7-7 7.8-15.2 12.3-24.6 13.4 3.2-4.1 6.8-10 9-15.7.2-.5.2-1 0-1.5s-.6-.9-1.1-1.1c-15.1-5.9-24.4-16.9-24.4-28.5 0-18.2 22.1-33 49.2-33 .1 0 12.3-.1 24 3.5C-24.8 163-37.3 177-37.3 193c0 9.3 4.2 18 11.4 25-1.4 0-2.9.1-4.5.1zm79.3 3c-1.2.5-2.2 1.4-2.7 2.7-.5 1.2-.5 2.6-.1 3.8 1.6 4 3.8 8.1 6.1 11.7-6.8-2.1-12.8-6.2-18.2-12.2-.9-1.1-2.3-1.7-3.7-1.7h-.4c-2.6.2-4.7.3-6.7.3-13.7 0-26.2-3.6-35.3-9.4l-.1-.1c-9.3-6-15-14.3-15-23.4 0-18.2 22.6-32.9 50.4-32.9 27.8 0 50.4 14.8 50.4 32.9 0 11.5-9.5 22.3-24.7 28.3z"></path>
+                </g>
+            </svg>
+          </div>
+          <h1>Her Side</h1>
+          <div class="story-details">This is where you got to say something :)</div>
+        </div>
+      </div>
+
     </div>
 
   </template>
@@ -42,25 +199,7 @@
 
   Polymer({
 
-    is: 'our-story-section',
-
-    properties: {
-      some: {
-        type: Array
-      },
-
-      thing: {
-        type: Object
-      },
-
-      also: {
-        type: String
-      }
-    },
-
-    _blabla: function() {
-      return 0;
-    }
+    is: 'our-story-section'
 
   });
 
